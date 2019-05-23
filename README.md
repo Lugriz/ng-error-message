@@ -4,7 +4,7 @@ Displays error messages when a form control is invalid avoiding the long list of
 
 ## Reason
 
-When developing a form, it's common to validate each input and display the errors when there are. However, it's tediuos write a tag for each error, something like this:
+When developing a form, it's common to validate each input and display the errors when they exist. However, it's tediuos to write a tag for each error, something like this:
 
 ```html
 <div *ngIf="form.get('email').hasError('required')">
@@ -41,7 +41,7 @@ The first thing you need to do it's to create a json file, in the file you will 
     }
 ```
 
-Then, if you want to display a message for each error, our json file need to look like this:
+Then, if you want to display a message for each error, our json file needs to look like this:
 
 ```javascript
     // assets/example/errors.json
@@ -63,7 +63,7 @@ Then, import the **NgErrorMessageModule** in your **AppModule** and call the for
 })
 export class AppModule { }
 
-// If you have multilanguage app, yo could do this:
+// If you have a multilanguage app, you could do this:
 
 @NgModule({
   imports: [
@@ -108,7 +108,7 @@ Now the service is started, you can use the **errorMessage** pipe in your HTML, 
 
 The pipe will display the first error found of the form control to avoid shows multiple messages, so the user modify one error at a time.
 
-You can pass params to the pipe, this is useful to dynamic messages.
+You can pass params to the pipe, this is useful for dynamic messages.
 
 The json file:
 
@@ -126,7 +126,9 @@ The html:
     </div>
 ```
 
-You need to pass an object to the pipe specifing the error and its params. Another example with multiple validations in one input.
+You need to pass an object to the pipe specifying the error and its params. Another example with multiple validations in one input.
+
+The json file:
 
 ```javascript
     {
