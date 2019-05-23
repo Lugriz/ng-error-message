@@ -1,0 +1,4 @@
+{
+    "maxlength": "This is the max length {{a}}",
+    "minlength": "This is the MIN length {{ a }} {{ b }}"
+}

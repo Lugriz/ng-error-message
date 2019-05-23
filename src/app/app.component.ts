@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgErrorMessageService } from '../../projects/ng-error-message/src/public_api'
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'ng-error-message-lib';
+  public obj: any = { maxlength: true };
+
+  constructor(
+    private _errMsgSrv: NgErrorMessageService
+  ) {
+    this._errMsgSrv.load();
+  }
+
+  change() {
+    this.obj = (this.obj.maxlength) ? { minlength: true } :{ maxlength: true };
+  }
+
 }
