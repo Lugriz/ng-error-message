@@ -1,6 +1,6 @@
 {
   "name": "ng-error-message",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Displays error messages when a form control is invalid avoiding the long list of tags for each error",
   "keywords": [
     "ng-error-messages",
