@@ -1,9 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { NgErrorMessageModule } from '../../projects/ng-error-message/src/lib/ng-error-message.module';
+import { NgErrorMessageModule, NgErrorMessageLoaderService, NgErrorMessageLoader } from '../../projects/ng-error-message/src/public_api';
+
+export function loaderFun (http: HttpClient) {
+    return new NgErrorMessageLoaderService(http, 'assets/errors/' + navigator.language + '.json');
+}
 
 @NgModule({
   declarations: [
@@ -12,7 +16,13 @@ import { NgErrorMessageModule } from '../../projects/ng-error-message/src/lib/ng
   imports: [
     BrowserModule,
     HttpClientModule,
-    NgErrorMessageModule.forRoot(`assets/errorss/${ navigator.language }.json`)
+    NgErrorMessageModule.forRoot(
+      {
+        provide: NgErrorMessageLoader,
+        useFactory: loaderFun,
+        deps: [HttpClient]
+      }
+    )
   ],
   providers: [],
   bootstrap: [AppComponent]

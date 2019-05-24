@@ -52,28 +52,106 @@ Then, if you want to display a message for each error, our json file needs to lo
     }
 ```
 
-Then, import the **NgErrorMessageModule** in your **AppModule** and call the forRoot method passing it the path of the errors json file.
+Then, import **NgErrorMessageModule, NgErrorMessageLoaderService, NgErrorMessageLoader** in your **AppModule** and call the forRoot method passing it a factory provider configuration.
+
+- **NgErrorMessageModule:** The module that contains the *errorMessage* pipe and starts the *NgErrorMessageService* if the *forRoot* method is called.
+- **NgErrorMessageLoaderService:** This the loader class that load the specified error json file.
+- **NgErrorMessageLoader:** This is an abstract class that is provided as token to starts the loader (**NgErrorMessageLoaderService**).
 
 ```javascript
+import { NgErrorMessageModule, NgErrorMessageLoaderService, NgErrorMessageLoader } from 'ng-error-message';
+
+// Remember to export the function
+export function loaderFun (http: HttpClient) {
+    return new NgErrorMessageLoaderService(http, 'assets/example/errors.json');
+}
+
 @NgModule({
   imports: [
-    NgErrorMessageModule.forRoot('assets/example/errors.json'),
+    NgErrorMessageModule.forRoot({
+        provide: NgErrorMessageLoader,
+        useFactory: loaderFun,
+        deps: [HttpClient]
+    }),
     ...
   ]
 })
 export class AppModule { }
 
 // If you have a multilanguage app, you could do this:
+import { NgErrorMessageModule, NgErrorMessageLoaderService, NgErrorMessageLoader } from 'ng-error-message';
+
+// Remember to export the function
+export function loaderFun (http: HttpClient) {
+    return new NgErrorMessageLoaderService(http, 'assets/example/' + navigator.language + '.json');
+}
 
 @NgModule({
   imports: [
-    NgErrorMessageModule.forRoot(`assets/example/${ navigator.language }.json`),
+    NgErrorMessageModule.forRoot({
+        provide: NgErrorMessageLoader,
+        useFactory: loaderFun,
+        deps: [HttpClient]
+    }),
     ...
   ]
 })
 export class AppModule { }
 
 // You should have multiple json files with the specific language
+```
+
+If you want to create a custom *NgErrorMessageLoaderService* you need to implement the *NgErrorMessageLoader* class to your custom class, for example:
+
+```javascript
+    // your custom class
+    import { NgErrorMessageLoader } from 'ng-error-message';
+    import { HttpClient } from '@angular/common/http';
+    import { Observable } from 'rxjs';
+
+    export class MyLoader implements NgErrorMessageLoader {
+
+        constructor(
+            private http: HttpClient,
+            private jsonUrl: string
+        ) {}
+
+        public getDictionary(): Observable<any> {
+            // your code
+
+            /**
+             * example:
+             * 
+             * return this.http.get(this.jsonUrl)
+             * */
+
+            return // return the json file or a custom object {}
+        }
+
+    }
+
+    // ==========================================================
+
+    // your AppModule
+    import { NgErrorMessageModule, NgErrorMessageLoader } from 'ng-error-message';
+    import { MyLoader } from 'the/path/MyLoader';
+
+    // Remember to export the function
+    export function loaderFun (http: HttpClient) {
+        return new MyLoader(http, 'assets/example/errors.json');
+    }
+
+    @NgModule({
+        imports: [
+            NgErrorMessageModule.forRoot({
+                provide: NgErrorMessageLoader,
+                useFactory: loaderFun,
+                deps: [HttpClient]
+            }),
+            ...
+        ]
+    })
+    export class AppModule { }
 ```
 
 **NOTE:** The forRoot method just will be called in the main Module, commonly *AppModule*. By using the Pipe just import the *NgErrorMessageModule* without the *forRoot* method.
@@ -144,3 +222,17 @@ The html:
         {{ form.get('control').errors | errorMessage : { maxlength: { max: '5', min: '1' }, required: { name: 'Firstname' } }  }}
     </div>
 ```
+
+## Contribution
+
+### Test the package
+
+Download the package and run:
+
+> $ npm run test:lib
+
+### Build the package
+
+If you modified the package and you want to build it run:
+
+> $ npm run build:lib

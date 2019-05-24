@@ -1,5 +1,5 @@
-import { Injectable, Inject } from '@angular/core';
-import { NG_ERROR_MESSAGE_LOADER, NgErrorMessageLoaderService } from './ng-error-message.loader.service';
+import { Injectable } from '@angular/core';
+import { NgErrorMessageLoader } from './ng-error-message.loader.service';
 
 /**
  * Service for serving the errors dictionary
@@ -19,7 +19,7 @@ export class NgErrorMessageService {
   }
 
   constructor(
-    @Inject(NG_ERROR_MESSAGE_LOADER) private _loader: NgErrorMessageLoaderService
+    private _loader: NgErrorMessageLoader
   ) {}
 
   /**

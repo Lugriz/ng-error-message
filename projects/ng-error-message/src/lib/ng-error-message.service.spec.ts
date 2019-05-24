@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { NgErrorMessageService } from './ng-error-message.service';
-import { NgErrorMessageLoaderService, NG_ERROR_MESSAGE_LOADER } from './ng-error-message.loader.service';
+import { NgErrorMessageLoader } from './ng-error-message.loader.service';
 import { of } from 'rxjs';
 
 describe('NgErrorMessageService', () => {
@@ -16,13 +16,12 @@ describe('NgErrorMessageService', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: NG_ERROR_MESSAGE_LOADER,
+          provide: NgErrorMessageLoader,
           useValue: loader
         }
       ]
     });
 
-    token = TestBed.get(NG_ERROR_MESSAGE_LOADER);
   });
 
   it('should be created', () => {
