@@ -17,6 +17,12 @@ When developing a form, it's common to validate each input and display the error
 
 The list of tags could be large depending the number of validations in the input. The purpose of this packages is to avoid doing that.
 
+## Installation
+
+You can install the package running:
+
+> $ npm install ng-error-message --save
+
 ## Usage
 
 The first thing you need to do it's to create a json file, in the file you will have all the errors you need in your application. Every property in the json will be named as the error displayed by the form (using reactive forms), for example, when a field has an error you can write **form.get('field').errors** and receive the error object, by example: 

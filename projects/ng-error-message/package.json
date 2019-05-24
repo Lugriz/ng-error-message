@@ -1,6 +1,6 @@
 {
   "name": "ng-error-message",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Displays error messages when a form control is invalid avoiding the long list of tags for each error",
   "keywords": [
     "ng-error-messages",
@@ -10,6 +10,7 @@
     "errors"
   ],
   "author": "insomniocode <insomniocode@gmail.com>",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/Lugriz/ng-error-message.git"
